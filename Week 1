@@ -1,0 +1,134 @@
+<html>
+    <head>
+        <title>Demo page</title>
+    </head>
+    <body>
+	
+	
+		<h1>Hello world</h1>
+		<h1 class="cssStyle">Hello world</h1>
+		<h1 id="h1-id">Hello world</h1>
+		
+		
+		<div custom="banner" class="col-md-12">
+			<p>Main banner</p>
+		</div>
+		
+		<div class="col-sm-12">
+			<p>Ipsum lorem</p>
+		</div>
+		
+		<div class="col-xs-12">
+			<p>Ipsum lorem - Contains with</p>
+		</div>
+		
+		<nav>
+			<a href="#">(First) This will be selected</a>
+			<div>
+				<a href="#">(Second) This will **not** be selected</a>
+			</div>
+		</nav>
+		
+		
+		<ol>
+			<li class="stopHere">One</li>
+			<li>Tow</li>
+			<li>Three</li>
+			<li id="four">Four</li>
+			<li>Five</li>
+			<li>Six</li>
+			<li>Seven</li>
+			<li>Arnold! Arnold! Arnold!</li>
+		</ol>
+		
+		
+		<div class="container">
+			<h5>First</h5>
+			<h5>Second</h5>
+			<h5 id="third">Third</h5>
+			<h5>Fourth</h5>
+			<h5>Fifth</h5>
+		</div>
+
+        <!-- your page -->
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+        <script>
+            
+			// CSS Selectors
+			// $('h1') get all the h1 elements
+			// $('.zebra') get all the elements using "zebra" class
+			// $('#zebra') get all the elements using "zebra" id
+			// $('div[custom='banner]') get all the elements that have custom='banner'
+			// $('div[class^="col"]') get all elements starting with col
+			// $('div[class*="col"]') get all elements that contain col
+			// $('nav > a') get all element in parent/child hierarchy. Only first level elements will be selected
+			// $('nav a') get all element in descendent hierarchy. All elements below nav will be selected
+			
+			// navigate at the DOM elements
+			// next() get the first element after the selector
+			// nextAll() get all the elements after the selector
+			// nextUntil('condition') get all the elements after the selector (not included) until the condition of the CSS selector (not included)
+			// prev() get the first element before the selector
+			// prevAll() get all the elements before the selector
+			// prevUntil('condition') get all the elements before the selector (not included) until the condition of the CSS selector (not included)
+			
+			
+			// will execute when the page is ready. Another way is: $(document).ready(function(){});
+			$(function(){
+			
+				$('h1').text('Hello jQuery');
+				$('h1.cssStyle').text('Hello jQuery by class selector');
+				$('#h1-id').text('Hello jQuery by id selector');
+				
+				// **** ****
+				// atributes
+				
+				// equality 
+				$('div[custom="banner"]').html('Main banner - Selectors');
+				
+				// starts with
+				$('div[class^="col"]').css('font-weight','bold');
+				
+				// contains
+				$('div[class*="-xs-"]').html('CSS Selector contains');
+				// *** *** *** ***
+				
+				// descendent
+				$('nav a').text('Descendent Hierarchy selected');
+				
+				// parent/child
+				$('nav > a').text('First level (Parent/Child) Hierarchy selected');
+				
+				// prev
+				$('#four').prev().attr('style', 'color:red;');
+				
+				// prevAll
+				//$('#four').prevAll().attr('style', 'color:red;');
+				
+				// prevUntil
+				$('#four').prevUntil('.stopHere').attr('style', 'color:red;');
+				// *** *** *** ***
+				
+				
+				// finding the element
+				var container = $('.container');
+				var third = $('#third');
+				
+				// return the position of the element. Begins with 0
+				var index = container.children().index(third);
+				$('#third').text( $('#third').html() + ' ' + index );
+				
+				// get the DOM element NOT the jQuery element
+				var domThirdElement = container.children().get(index);
+				
+				// transform into jQuery component
+				var jQueryObjThird = $(domThirdElement);
+				
+				jQueryObjThird.attr('style','font-size:25px;');
+				// *** *** *** ***
+				
+			});
+			
+        </script>
+    </body>
+</head>
