@@ -1,0 +1,237 @@
+<html>
+    <head>
+        <title>Demo page</title>
+		<style>
+			.blue {color:blue}
+		</style>
+    </head>
+	
+    <body>
+	
+	
+		<button type="button" position="true">Click here to know the mouse position</button>
+		<div id="output" />
+		<br />
+		<br />
+		
+		<form>
+		
+		<h2>After/Before</h2>
+		
+			<div>
+				<label for="name">Name:</label>
+				<input type="text" class="form-control" id="name" />
+				<span class="help" hidden="hidden">Type your Name</span>
+			</div>
+			
+			<div>
+				<label for="email">Email:</label>
+				<input type="text" class="form-control" id="email" />
+				<span class="help" hidden="hidden">Type your Email</span>
+			</div>
+			<br />
+			
+			<div id="mouseEnterLeave">
+				<div>
+					<label for="name2">Name - mouse leave/enter:</label>
+					<input type="text" class="form-control" id="name2" />
+					<span class="help" hidden="hidden">Type your Name 2</span>
+				</div>
+				
+				<div>
+					<label for="email2" id="lblEmail2">Email - mouse leave/enter</label>
+					<input type="text" class="form-control" id="email2" />
+					<span class="help" hidden="hidden">Type your Email 2</span>
+				</div>
+			</div>
+			
+			<br /><br />
+			<h2>Delegate</h2>
+			
+			<div id="addButton">
+				<div>
+					<button type="button" class="add" id="new">Add</button>
+					<button type="button" class="add evaluate">Add and Evaluate</button>					
+					<div id="addedButton" />
+					
+				</div>
+			</div>
+			<div id="textAdded"></div>
+			
+			<br /><br />
+			<h2>Trigger Events</h2>
+			
+			<button id="single">This only works once</button>
+			
+			<br />
+			<div class="triggerClass">Trigger 1</div>
+			<div class="triggerClass">Trigger 2</div>
+			<button type="button" id="clickTrigger">Trigger Event</button>
+			<div id="triggerMsg"></div>
+			
+			<br /><br />
+			<h2>Prepend/Append</h2>
+			
+			<div id="targetPrepend">
+				<button type="button" id="clickPrepend">Prepend</button>
+				<div>Prepend New content</div>
+				<div>Prepend existing content</div>
+			</div>
+			
+			<br />
+			
+			<div id="targetAppend">
+				<button type="button" id="clickAppend">Append </button>
+				<div>Append New content</div>
+				<div>Append existing content</div>
+			</div>
+			
+			<br /><br />
+			<h2>After/Before</h2>
+			
+			<div>
+				<button type="button" id="clickAfter">Insert After</button>
+				<div>Using insert after</div>
+				<div id="divInsertAfter">Div element will be inserted after</div>
+				<div>@inserted</div>
+			</div>
+			
+			<br />
+			
+			<div>
+				<button type="button" id="clickBefore">Insert Before</button>
+				<div>Using insert before</div>
+				<div id="divInsertBefore">Div element will be inserted before</div>
+			</div>
+			
+			<br /><br />
+			<h2>Wrapping</h2>
+			
+			<div id="parent">
+				<div class="demo">1</div>
+				<div class="demo">2</div>
+				<div class="another"></div>
+			</div>
+		
+		</form>
+		
+        <!-- your page -->
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+        <script>
+			
+			// will execute when the page is ready. Another way is: $(document).ready(function(){});
+			$(function(){
+			
+				// Write out the x/y coordinates of the mouse on click
+				$('button[position=true]').click(function(e) {
+					$('#output').text(e.pageX + 'x' + e.pageY);
+				});
+				
+				
+				// blur happens before event change
+				$('input[type=text]').blur(function() {
+					$(this).next('span.help').attr('hidden', 'hidden');
+				})
+				.focus(function() {
+					$(this).next('span.help').removeAttr('hidden');
+				});
+				
+				
+				$('#mouseEnterLeave input[type=text]').mouseleave(function() {
+					$(this).next('span.help').attr('hidden', 'hidden');
+				}).mouseenter(function() {
+					$(this).next('span.help').removeAttr('hidden');
+				});
+				
+				// hover accepts two parameters to come into play like mouseenter and mouseout
+				$('#target').hover(function() {
+					// mouseenter
+					$('#target-help').text('More data');
+				}, function() {
+					// mouseleave
+					$('#target-help').text('');
+				});
+				
+				// *** *** ***
+				// val: uses on input controls
+				var value = $('#email2').val();
+
+				$('#lblEmail2').css('color','red').css('backgroundColor','yellow');
+				
+				// *** *** ***
+				// on/off
+				// $('selector').('events', 'selector (optional)', function)
+				$('#demo').on('click', function() { alert('hello!!'); });
+				
+				// *** *** *** 
+				// objects add after page loaded are not added into the event handler
+				$('#new').click(function() {
+					$('#addedButton').html('<button type="button" class="add evaluate">Brand new button and evaluated</button>');
+				});
+				
+				/*$('button.evaluate').click(function() {
+					$('#textAdded').html('Object evaluated');
+				});*/
+				
+				// create the event even when the element is created after the onload event
+				/*$('form').delegate( 'button.evaluate', 'click', function() {
+					$('#textAdded').text( ' created' );
+				});*/
+				$(document).delegate('button.evaluate', 'click', function() { 
+					$('#textAdded').text( $(this).text() + ' created' ); 
+				});
+				
+				// *** *** ***
+				$('#single').one('click', function() {
+					alert('clicked once');
+				});
+				
+				//*** *** ***
+				$('.triggerClass').mouseout(function() {
+					$('#triggerMsg').text( $('#triggerMsg').text() + " - " + $(this).text()  );
+				});
+				
+				$('#clickTrigger').click(function() {
+					// call the event
+					//$('.triggerClass').mouseout();
+					// call the event, even when it exists more than one object in the selector condition
+					//$('.triggerClass').trigger('mouseout');
+					// call the event only once
+					$('.triggerClass').triggerHandler('mouseout');
+				});
+				
+				//*** *** ***
+				$('#clickAppend').click(function() {
+					$('#targetAppend').append('<div>Appended</div>');
+				});
+				
+				$('#clickPrepend').click(function() {
+					$('#targetPrepend').prepend('<div>Prepended</div>');
+				});
+				
+				//*** *** ***
+				$('#clickBefore').click(function() {
+					$('#divInsertBefore').before('<div>Inserted Before</div>');
+				});
+				
+				$('#clickAfter').click(function() {
+					$('#divInsertAfter').after('<div>Inserted After</div>');
+				});
+				
+				//*** *** ***
+		
+				// wrap: grap the elements individually
+				//$('div.demo').wrap('<section />');
+				
+				// wrapAll: grap all the elements envol
+				//$('.demo').wrap('<section />');
+				
+				// wrapInner
+				$('#parent').wrapInner("<section />");
+			
+			
+			});
+			
+        </script>
+    </body>
+</head>
