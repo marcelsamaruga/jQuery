@@ -1,7 +1,11 @@
 <html>
     <head>
         <title>Demo page</title>
+		<style>
+			.blue {color:blue}
+		</style>
     </head>
+	
     <body>
 	
 	
@@ -49,7 +53,27 @@
 			<h5>Fourth</h5>
 			<h5>Fifth</h5>
 		</div>
+		
+		<h2 id="addRemove">Add/Remove Class</h2>
+		
+		<h2 id="manipulateAttr">Manipulate attributes</h2>
+		<br />
+		
+		<div id="manipulateHTML">Manipulate HTML</div>
+		<br />
+		
+		<input type="button" name="buttonClick" id="buttonClick" value="Click Event Handler" />
+		<div id="divEventHandler"></div>
+		<br />
+		
 
+		<div class="event">
+			<div>Using this 1</div><br />
+			<div>Using this 2</div><br />
+			<div>Using this 3</div>
+		</div>
+		
+		
         <!-- your page -->
         <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
         <script>
@@ -126,6 +150,44 @@
 				
 				jQueryObjThird.attr('style','font-size:25px;');
 				// *** *** *** ***
+				
+				// adding or removing classes
+				$('#addRemove').addClass('blue');
+				//$("#addRemove").removeClass('blue');
+				
+				// add/read/remove attribute
+				$('#manipulateAttr').attr('style', 'color:blue;');
+				alert( $('#manipulateAttr').attr('style') );
+				$('#manipulateAttr').removeAttr('style');
+				
+				// html manipulations
+				$('#manipulateHTML').html('<u>Manipulate HTML using jQuery</u>');
+				//$('#manipulateHTML').html('<u>Manipulate HTML using jQuery</u>');
+				//alert($('#manipulateHTML').html());
+				
+				
+				// *** *** ***
+				// using events
+				$('#buttonClick').click(function(){
+					$('#divEventHandler').text('Click Event Handler');
+				});
+				
+				// using this
+				// this is the DOM Element of the item that raise the event
+				// transform into jQuery Object
+				$('.event div').click(function(){
+					$(this).text('Clicked!');
+				});
+				
+				// another common events
+				/*$('.some-class').each(function(item) {
+					// item will be a variable that will represent each object
+				});
+				
+				hover
+				mouseout
+				
+				*/
 				
 			});
 			
