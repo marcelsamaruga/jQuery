@@ -112,6 +112,37 @@
 				<div class="demo">2</div>
 				<div class="another"></div>
 			</div>
+			
+			<br /><br />
+			<h2>Animations</h2>
+			
+			
+			<div class="animation">Show / Hide / Toggle</div>
+			<button type="button" id="btnHide">Hide()</button>
+			<button type="button" id="btnShow">Show()</button>
+			<button type="button" id="btnToggle">Toggle()</button>
+			
+			<br /><br />
+			<h2>ReplaceWith / Remove / Empty</h2>
+			
+			<div id="replaceWith">
+				<div id="replaceWithCmd">Replace with: replace all the selector content</div><br />
+				<div id="removeCmd">Remove: remove the selector content</div><br />
+				<div id="emptyCmd">Empty: clear the content within the selector</div>
+			</div>
+			
+			<br /><br />
+			<h2>Cloning</h2>
+			
+			<button type="button" id="add-line">Add new line</button>
+			<div id="container">
+				<div class="user-entry">
+					<label>Email:</label>
+					<input type="email" />
+					<label>Password:</label>
+					<input type="password" />
+				</div>
+			</div>
 		
 		</form>
 		
@@ -228,8 +259,44 @@
 				
 				// wrapInner
 				$('#parent').wrapInner("<section />");
+				
+				// *** **** ****
+				// animations
+				$('#btnToggle').click(function() {
+					$('div[class=animation]').toggle(1000);
+				});
+				
+				$('#btnShow').click(function() {
+					$('div[class=animation]').show(1000); // fadeIn
+				});
+				
+				$('#btnHide').click(function() {
+					$('div[class=animation]').hide(1000);
+				});
+				
+				// *** **** ****
+				// replaceWith / remove / empty-cells
+				$('#replaceWithCmd').click(function() {
+					$('#replaceWithCmd').replaceWith('<div>Content Replaced With</div>');
+				});
 			
-			
+				$('#removeCmd').click(function() {
+					$('#removeCmd').remove();
+				});
+				
+				$('#emptyCmd').click(function() {
+					$('#emptyCmd').empty();
+				});
+				
+				// *** **** ****
+				// cloning
+				$userForm = $('.user-entry').clone();
+				$userForm.css('display','none');
+				$('#add-line').click(function() {
+					$('#container').append($userForm);
+					$userForm.fadeIn(1000);
+				});
+				
 			});
 			
         </script>
