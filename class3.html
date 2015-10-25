@@ -1,0 +1,96 @@
+<html>
+<body>
+	<form>
+		<div>
+			<label>First Name</label>
+			<input type="text" name="firstName" id="firstName" value="Narcel" /> 
+		</div>
+		<div>
+			<label>Last Name</label>
+			<input type="text" name="lastName" id="lastName" value="Samaruga" /> 
+		</div>
+		
+		<textarea cols="58" rows="6" name="txtJson" id="txtJson"></textarea>
+		
+		<button id="string" type="button">Stringify</button>
+		<button id="parse" type="button">Parse</button>
+		<button id="getJSON" type="button">get JSON</button>
+	
+		
+        <!-- your page -->
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+		<script>
+			$(function(){
+			
+				$("#string").click(function() {
+					
+					var person = new Object();
+					person.firstName = $('#firstName').val();
+					person.lastName = $('#lastName').val();
+						
+					var txt = JSON.stringify(person);
+					
+					$('#txtJson').val( txt );
+					
+				});
+				
+				$("#parse").click(function() {
+					
+					var txt = $('#txtJson').val();
+					var jsonParse = JSON.parse(txt);
+
+					$('#firstName').val( jsonParse.firstName );
+					$('#lastName').val( jsonParse.lastName );
+					
+				});
+				
+				$("#getJSON").click(function() {
+					/* $.getJSON('/api/Demo', function (person) {
+						$('#first-name').val(person.firstName);
+						$('#last-name').val(person.lastName);
+					}); */
+					
+					// syntax to post request using jquery post method
+					// $.post ( URL, parameter, call back function ) ;
+					// instead using call back function, it recommeds use promises like done, error to chain method and be clearly
+					
+					var person = {
+						firstName : $('#firstName').val() , 
+						lastName : $('#lastName').val()
+					}
+					
+					$.post( '/url/Demo', person ).done( function(data) {
+						alert(data);
+					});
+					
+				});
+				
+				$(document).ajaxSend(function () {
+					// raised when a call starts
+					$('button').attr('disabled', 'disabled');
+				}).ajaxComplete(function () {
+					// raised when a call completes
+					$('button').removeAttr('disabled');
+				});
+				
+				
+				/*
+				Loading HTML
+
+				load will call the URL provided, obtain the HTML, and place it in the targeted item.
+
+				$('#target').load('some-url.html');
+				Loading and executing JavaScript
+
+				If you need to load a JavaScript file dynamically, you can use getScript. One important note about getScript is it downloads and executes the script when it's called.
+
+				$.getScript('some-url.js');
+				*/
+				
+			});
+		</script>
+	
+	<form>
+	
+</body>
+<html>
